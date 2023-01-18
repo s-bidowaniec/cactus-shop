@@ -9,3 +9,31 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+// models
+model ProductOnOrder {
+  product   Product @relation(fields: [productId], references: [id])
+  productId String // relation scalar field (used in the `@relation` attribute above)
+  order   Order @relation(fields: [orderId], references: [id])
+  orderId String // relation scalar field (used in the `@relation` attribute above)
+  quantity Int
+  @@id([productId, orderId])
+}
+
+model Product {
+  id String  @id @default(uuid())
+  name String
+  price Int
+  description String
+  category String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    ProductOnOrder[]
+}
+
+model Order {
+  id String  @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products   ProductOnOrder[]
+}
