@@ -6,10 +6,13 @@ import Home from "./components/pages/Home/Home";
 import Product from "./components/pages/Product/Product";
 import Cart from "./components/pages/Cart/Cart";
 import Order from "./components/pages/Order/Order";
+import { useDispatch } from "react-redux";
+import { fetchProducts } from "./redux/products/productsRedux";
+import { useEffect } from "react";
 
 function App() {
-  //const dispatch = useDispatch();
-  ///useEffect(() => dispatch(fetchProducts), [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => dispatch(fetchProducts()), [dispatch]);
   return (
     <main>
       <Container>
