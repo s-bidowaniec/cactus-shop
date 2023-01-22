@@ -8,7 +8,7 @@ function getProducts() {
       id: 'fd105551-0f0d-4a9f-bc41-c559c8a17256',
       name: 'Ferocactus wislizeni',
       price: 25,
-      pictures: '',
+      pictures: 'cact1_0.webp, cact1_1.webp, cact1_2.webp',
       category: 'cactus',
       description: 'The fishhook barrel cactus',
     },
@@ -16,7 +16,7 @@ function getProducts() {
       id: 'c920c7b9-a67d-4edb-8ce7-e3c9f3889e56',
       name: 'Myrtillocactus geometrizans',
       price: 23,
-      pictures: '',
+      pictures: 'cact2_0.jpeg, cact2_1.jpeg, cact2_2.jpeg',
       category: 'cactus',
       description:
         'Myrtillocactus geometrizans is a large shrubby cactus growing to 4–5 m tall',

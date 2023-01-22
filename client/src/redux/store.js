@@ -1,14 +1,14 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import initialState from './initialState';
-import productsReducer from "./products/productsRedux";
-import ordersReducer from "./orders/ordersRedux";
+import productsReducer from './products/productsRedux';
+import orderReducer from './order/orderRedux';
 
 // reducers
 
 const subreducers = {
   products: productsReducer,
-  orders: ordersReducer
+  order: orderReducer,
 };
 
 const reducer = combineReducers(subreducers);
@@ -44,8 +44,10 @@ const store = createStore(
   usedState,
   compose(
     applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
-  )
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : (f) => f,
+  ),
 );
 // listen for store changes and use saveToLocalStorage to
 // save them to localStorage
