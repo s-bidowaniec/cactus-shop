@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { addOrderRequest, getOrder } from '../../../redux/order/orderRedux';
+import { Link } from 'react-router-dom';
 
 const OrderForm = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ const OrderForm = () => {
         <Alert variant="success">
           <Alert.Heading>Success!</Alert.Heading>
           <p>Your order was successfully saved!. </p>
+          <Link to="/" className="mt-2">
+            <Button className="w-100">Back to store</Button>
+          </Link>
         </Alert>
       )}
       {status === 'clientError' && (

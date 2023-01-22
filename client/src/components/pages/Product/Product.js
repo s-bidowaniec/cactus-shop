@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getProductById } from '../../../redux/products/productsRedux';
 import { IMGS_URL } from '../../../config';
-import { Carousel, Col, Row } from 'react-bootstrap';
+import { Button, Carousel, Col, Row } from 'react-bootstrap';
 import ProductCartButtons from '../../features/ProductCartButtons/ProductCartButtons';
+import { formatCurrency } from '../../../utilities/formatCurrency';
 
 const Product = () => {
   let { id } = useParams();
@@ -41,9 +42,16 @@ const Product = () => {
         <Col className="d-flex flex-column">
           <h3>Description:</h3>
           {activeProduct.description}
+          <h5>Price:</h5>
+          {formatCurrency(activeProduct.price)}
+          <h5>Category:</h5>
+          {activeProduct.category}
           <div className="mt-auto">
             <ProductCartButtons id={id} />
           </div>
+          <Link to="/" className="mt-2">
+            <Button className="w-100">Back to store</Button>
+          </Link>
         </Col>
       </Row>
     </div>
