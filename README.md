@@ -26,6 +26,9 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Heroku
+https://kodilla-cactus.herokuapp.com
+
 ## Installation
 
 ```bash
@@ -35,6 +38,10 @@ $ npm install
 ## Running the app
 
 ```bash
+# setup db
+$ npx prisma db push 
+$ npx prisma db seed
+
 # development
 $ npm run start
 
