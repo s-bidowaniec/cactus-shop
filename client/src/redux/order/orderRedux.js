@@ -1,4 +1,5 @@
-// order
+import { API_URL } from '../../config';
+import axios from 'axios';
 // selectors
 export const getOrder = ({ order }) => order;
 export const getOrderedProductById = ({ order }, productId) =>
@@ -9,13 +10,31 @@ const ADD_ITEM = createActionName('ADD_ITEM');
 const INCREMENT_ITEM = createActionName('INCREMENT_ITEM');
 const DECREMENT_ITEM = createActionName('DECREMENT_ITEM');
 const REMOVE_ITEM = createActionName('REMOVE_ITEM');
+const CLEAR_ORDER = createActionName('CLEAR_ORDER');
 //action creators
 export const addItem = (payload) => ({ type: ADD_ITEM, payload });
 export const incrementItem = (payload) => ({ type: INCREMENT_ITEM, payload });
 export const decrementItem = (payload) => ({ type: DECREMENT_ITEM, payload });
 export const removeItem = (payload) => ({ type: REMOVE_ITEM, payload });
+export const clearOrder = (payload) => ({ type: CLEAR_ORDER, payload });
 // thunk actions
-// send order
+export const addOrderRequest = (orderData, setStatus) => {
+  return async (dispatch) => {
+    setStatus('loading');
+    try {
+      const { data } = await axios.post(`${API_URL}/api/orders`, orderData);
+      console.log(data);
+      setStatus('success');
+      dispatch(clearOrder());
+    } catch (e) {
+      if (e.response.status === 400) {
+        setStatus('clientError');
+      } else {
+        setStatus('serverError');
+      }
+    }
+  };
+};
 //reducer
 const ordersReducer = (statePart = null, action) => {
   switch (action.type) {
@@ -44,6 +63,8 @@ const ordersReducer = (statePart = null, action) => {
       return reducedItems.filter((item) => item.count > 0);
     case REMOVE_ITEM:
       return statePart.filter((item) => item.id !== action.payload.id);
+    case CLEAR_ORDER:
+      return [];
     default:
       return statePart;
   }

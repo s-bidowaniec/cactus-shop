@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import ProductCartButtons from '../ProductCartButtons/ProductCartButtons';
 
 const ProductCard = (props) => {
-  const images = props.pictures.split(',').map((name) => `${IMGS_URL}${name}`);
+  const images = props.pictures.split(', ').map((name) => `${IMGS_URL}${name}`);
   return (
     <Card className="h-100">
       <Card.Img

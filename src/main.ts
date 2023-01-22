@@ -9,11 +9,11 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
+      whitelist: true,
       transform: true,
     }),
   );
   app.setGlobalPrefix('api');
-  console.log(join(__dirname, '..', '..', 'public'));
   app.useStaticAssets(join(__dirname, '..', '..', 'public'), {
     index: false,
     prefix: '/api/public',

@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../shared/services/prisma/prisma.service';
-import { Order, Product } from '@prisma/client';
-import { CreateOrderDTO } from './dtos/create-order.dto';
+import { Order } from '@prisma/client';
+import { CreateOrderDTO, Item } from './dtos/create-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -32,12 +32,15 @@ export class OrdersService {
     }
   }
   // POST
-  async addNew(products: CreateOrderDTO[]): Promise<object | void> {
+  async addNew(formData: CreateOrderDTO): Promise<object | void> {
     try {
       await this.prismaService.order.create({
         data: {
+          name: formData.name,
+          surname: formData.surname,
+          address: formData.address,
           products: {
-            create: products.map((product: CreateOrderDTO) => {
+            create: formData.items.map((product: Item) => {
               return {
                 product: { connect: { id: product.id } },
                 quantity: Number.parseInt(product.quantity),

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { getOrder } from '../../../redux/order/orderRedux';
 const Header = () => {
   const order = useSelector((state) => getOrder(state));
-  console.log(order);
   return (
     <Navbar sticky="top" className="bg-white shadow-sm mb-3">
       <Container>

@@ -5,7 +5,6 @@ import {
   Post,
   Param,
   ParseUUIDPipe,
-  ParseArrayPipe,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDTO } from './dtos/create-order.dto';
@@ -24,7 +23,7 @@ export class OrdersController {
   @Post('/')
   addNew(
     @Body()
-    formData: CreateOrderDTO[],
+    formData: CreateOrderDTO,
   ) {
     return this.ordersService.addNew(formData);
   }
