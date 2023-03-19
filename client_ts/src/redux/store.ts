@@ -1,20 +1,11 @@
-import { combineReducers, compose, applyMiddleware } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import initialState from './initialState';
-import productsReducer from './products/productsRedux';
-import orderReducer from './order/orderRedux';
-
-// reducers
-const subreducers = {
-  products: productsReducer,
-  order: orderReducer,
-};
-
-const reducer = combineReducers(subreducers);
+import productsReducer, { ProductType } from './products/productsRedux';
+import orderReducer, { OrderItemType } from './order/orderRedux';
 
 // convert object to string and store in localStorage
-function saveToLocalStorage(state: object) {
+function saveToLocalStorage(state: RootState) {
   try {
     const serialisedState = JSON.stringify(state);
     localStorage.setItem('persistantState', serialisedState);
@@ -25,7 +16,12 @@ function saveToLocalStorage(state: object) {
 
 // load string from localStarage and convert into an Object
 // invalid output must be undefined
-function loadFromLocalStorage() {
+const loadFromLocalStorage = ():
+  | {
+      products: ProductType[];
+      order: OrderItemType[];
+    }
+  | undefined => {
   try {
     const serialisedState = localStorage.getItem('persistantState');
     if (serialisedState === null) return undefined;
@@ -34,15 +30,17 @@ function loadFromLocalStorage() {
     console.warn(e);
     return undefined;
   }
-}
+};
 
 const localState = loadFromLocalStorage();
 const usedState = localState ?? initialState;
-//const middleware = thunk as ThunkMiddleware;
 
 const store = configureStore({
-  reducer: reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  reducer: {
+    products: productsReducer,
+    order: orderReducer,
+  },
+  middleware: [thunk],
   preloadedState: usedState,
   enhancers: [],
 });

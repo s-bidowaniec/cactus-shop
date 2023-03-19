@@ -11,11 +11,14 @@ import Order from './components/pages/Order/Order';
 import { fetchProducts } from './redux/products/productsRedux';
 import { useEffect } from 'react';
 import Summary from './components/pages/Summary/Summary';
-import { useAppDispatch } from './hooks';
+import { useAppDispatch } from './redux/hooks';
+import { AppDispatch } from './redux/store';
 
-function App() {
-  const dispatch = useAppDispatch();
-  useEffect(() => dispatch(fetchProducts()), [dispatch]);
+const App: React.FC = () => {
+  const dispatch: AppDispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
   return (
     <main>
       <Container>
@@ -31,6 +34,6 @@ function App() {
       </Container>
     </main>
   );
-}
+};
 
 export default App;
