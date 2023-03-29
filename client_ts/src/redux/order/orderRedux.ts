@@ -27,7 +27,7 @@ export const getOrderedProductById = (
 
 // Slice
 
-const ordersSlice = createSlice({
+export const ordersSlice = createSlice({
   name: 'order',
   initialState: orderInitialState,
   reducers: {
@@ -38,14 +38,18 @@ const ordersSlice = createSlice({
       } else {
         state[index].quantity += action.payload.quantity;
       }
+      return state;
     },
-    incrementItem: (state, action: PayloadAction<OrderItemType>) => {
+    incrementItem: (state, action: PayloadAction<{ id: string }>) => {
       const index = state.findIndex((item) => item.id === action.payload.id);
+      console.log(action.payload.id);
+      console.log(index);
       if (index !== -1) {
         state[index].quantity += 1;
+        console.log(state[index].quantity);
       }
     },
-    decrementItem: (state, action: PayloadAction<OrderItemType>) => {
+    decrementItem: (state, action: PayloadAction<{ id: string }>) => {
       const index = state.findIndex((item) => item.id === action.payload.id);
       if (index !== -1) {
         state[index].quantity -= 1;
@@ -53,12 +57,13 @@ const ordersSlice = createSlice({
           state.splice(index, 1);
         }
       }
+      return state;
     },
     removeItem: (state, action: PayloadAction<OrderItemType>) => {
-      state = state.filter((item) => item.id !== action.payload.id);
+      return state.filter((item) => item.id !== action.payload.id);
     },
     clearOrder: (state) => {
-      state = [];
+      return [];
     },
   },
 });

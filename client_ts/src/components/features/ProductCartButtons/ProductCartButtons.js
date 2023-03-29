@@ -20,7 +20,7 @@ const ProductCartButtons = (props) => {
         <Button
           className="w-100"
           onClick={() => {
-            return dispatch(addItem({ id: props.id, count: 1 }));
+            return dispatch(addItem({ id: props.id, quantity: 1 }));
           }}
         >
           + Add to cart
@@ -38,7 +38,9 @@ const ProductCartButtons = (props) => {
               -
             </Button>
             <div>
-              <span className="fs-3">{orderProduct && orderProduct.count}</span>
+              <span className="fs-3">
+                {orderProduct && orderProduct.quantity}
+              </span>
               in cart
             </div>
             <Button onClick={() => dispatch(incrementItem({ id: props.id }))}>

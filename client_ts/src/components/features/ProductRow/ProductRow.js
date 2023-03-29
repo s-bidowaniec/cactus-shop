@@ -10,7 +10,9 @@ import {
   removeItem,
 } from '../../../redux/order/orderRedux';
 import { Button } from 'react-bootstrap';
-
+import store from '../../../redux/store';
+//import order from '../../pages/Order/Order';
+import { ordersSlice } from '../../../redux/order/orderRedux';
 const ProductRow = (props) => {
   const dispatch = useDispatch();
   const activeProduct = useSelector((state) => getProductById(state, props.id));
@@ -28,12 +30,17 @@ const ProductRow = (props) => {
           />
         </td>
         <td>{activeProduct.name}</td>
-        <td>{props.count}</td>
-        <td>{formatCurrency(props.count * activeProduct.price)}</td>
+        <td>{props.quantity}</td>
+        <td>{formatCurrency(props.quantity * activeProduct.price)}</td>
         {props.variant !== 'summary' && (
           <td>
             <Button
-              onClick={() => dispatch(incrementItem({ id: activeProduct.id }))}
+              onClick={() => {
+                console.log('click');
+                store.dispatch(
+                  ordersSlice.actions.incrementItem({ id: activeProduct.id }),
+                );
+              }}
             >
               +
             </Button>

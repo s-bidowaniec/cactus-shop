@@ -32,7 +32,10 @@ const Header = () => {
                 transform: 'translate(25%, 25%)',
               }}
             >
-              {order.reduce((partialSum, item) => partialSum + item.count, 0)}
+              {order.reduce(
+                (partialSum, item) => partialSum + item.quantity,
+                0,
+              )}
             </div>
           </Button>
         </Link>

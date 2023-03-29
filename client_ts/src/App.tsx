@@ -7,18 +7,15 @@ import Home from './components/pages/Home/Home';
 import Product from './components/pages/Product/Product';
 import Cart from './components/pages/Cart/Cart';
 import Order from './components/pages/Order/Order';
-//import { useDispatch } from 'react-redux';
 import { fetchProducts } from './redux/products/productsRedux';
 import { useEffect } from 'react';
 import Summary from './components/pages/Summary/Summary';
-import { useAppDispatch } from './redux/hooks';
-import { AppDispatch } from './redux/store';
+import store from './redux/store';
 
 const App: React.FC = () => {
-  const dispatch: AppDispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    fetchProducts()(store.dispatch);
+  }, [store.dispatch]);
   return (
     <main>
       <Container>

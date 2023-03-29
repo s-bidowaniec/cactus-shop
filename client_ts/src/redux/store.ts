@@ -44,6 +44,7 @@ const store = configureStore({
   preloadedState: usedState,
   enhancers: [],
 });
+
 // listen for store changes and use saveToLocalStorage to
 // save them to localStorage
 store.subscribe(() => saveToLocalStorage(store.getState()));
