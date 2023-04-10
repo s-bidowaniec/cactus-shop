@@ -3,8 +3,9 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { getOrder } from '../../../redux/order/orderRedux';
+import { RootState } from '../../../redux/store';
 const Header = () => {
-  const order = useSelector((state) => getOrder(state));
+  const order = useSelector((state: RootState) => getOrder(state));
   return (
     <Navbar sticky="top" className="bg-white shadow-sm mb-3">
       <Container>
@@ -32,7 +33,10 @@ const Header = () => {
                 transform: 'translate(25%, 25%)',
               }}
             >
-              {order.reduce((partialSum, item) => partialSum + item.count, 0)}
+              {order.reduce(
+                (partialSum, item) => partialSum + item.quantity,
+                0,
+              )}
             </div>
           </Button>
         </Link>

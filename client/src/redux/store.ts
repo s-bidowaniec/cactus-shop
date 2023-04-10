@@ -1,20 +1,11 @@
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import initialState from './initialState';
-import productsReducer from './products/productsRedux';
-import orderReducer from './order/orderRedux';
-
-// reducers
-
-const subreducers = {
-  products: productsReducer,
-  order: orderReducer,
-};
-
-const reducer = combineReducers(subreducers);
+import productsReducer, { ProductType } from './products/productsRedux';
+import orderReducer, { OrderItemType } from './order/orderRedux';
 
 // convert object to string and store in localStorage
-function saveToLocalStorage(state) {
+function saveToLocalStorage(state: RootState) {
   try {
     const serialisedState = JSON.stringify(state);
     localStorage.setItem('persistantState', serialisedState);
@@ -25,7 +16,12 @@ function saveToLocalStorage(state) {
 
 // load string from localStarage and convert into an Object
 // invalid output must be undefined
-function loadFromLocalStorage() {
+const loadFromLocalStorage = ():
+  | {
+      products: ProductType[];
+      order: OrderItemType[];
+    }
+  | undefined => {
   try {
     const serialisedState = localStorage.getItem('persistantState');
     if (serialisedState === null) return undefined;
@@ -34,22 +30,26 @@ function loadFromLocalStorage() {
     console.warn(e);
     return undefined;
   }
-}
+};
 
 const localState = loadFromLocalStorage();
 const usedState = localState ?? initialState;
 
-const store = createStore(
-  reducer,
-  usedState,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__
-      ? window.__REDUX_DEVTOOLS_EXTENSION__()
-      : (f) => f,
-  ),
-);
+const store = configureStore({
+  reducer: {
+    products: productsReducer,
+    order: orderReducer,
+  },
+  middleware: [thunk],
+  preloadedState: usedState,
+  enhancers: [],
+});
+
 // listen for store changes and use saveToLocalStorage to
 // save them to localStorage
 store.subscribe(() => saveToLocalStorage(store.getState()));
 export default store;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;

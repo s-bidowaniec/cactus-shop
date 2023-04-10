@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Footer from './components/views/Footer/Footer';
@@ -6,14 +7,15 @@ import Home from './components/pages/Home/Home';
 import Product from './components/pages/Product/Product';
 import Cart from './components/pages/Cart/Cart';
 import Order from './components/pages/Order/Order';
-import { useDispatch } from 'react-redux';
 import { fetchProducts } from './redux/products/productsRedux';
 import { useEffect } from 'react';
 import Summary from './components/pages/Summary/Summary';
+import store from './redux/store';
 
-function App() {
-  const dispatch = useDispatch();
-  useEffect(() => dispatch(fetchProducts()), [dispatch]);
+const App: React.FC = () => {
+  useEffect(() => {
+    fetchProducts()(store.dispatch);
+  }, [store.dispatch]);
   return (
     <main>
       <Container>
@@ -29,6 +31,6 @@ function App() {
       </Container>
     </main>
   );
-}
+};
 
 export default App;

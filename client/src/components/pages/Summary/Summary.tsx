@@ -5,9 +5,10 @@ import { getOrder } from '../../../redux/order/orderRedux';
 import { OrderTotalPrice } from '../../features/OrderTotalPrice/OrderTotalPrice';
 
 import OrderForm from '../../features/OrderForm/OrderForm';
+import { RootState } from '../../../redux/store';
 
 const Summary = () => {
-  const order = useSelector((state) => getOrder(state));
+  const order = useSelector((state: RootState) => getOrder(state));
   return (
     <Container>
       <h3>Order Summary:</h3>

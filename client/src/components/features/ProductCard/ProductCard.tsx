@@ -4,8 +4,15 @@ import { IMGS_URL } from '../../../config';
 import { formatCurrency } from '../../../utilities/formatCurrency';
 import { Link } from 'react-router-dom';
 import ProductCartButtons from '../ProductCartButtons/ProductCartButtons';
-
-const ProductCard = (props) => {
+type ProductCardProps = {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  pictures: string;
+};
+const ProductCard = (props: ProductCardProps) => {
   const images = props.pictures.split(', ').map((name) => `${IMGS_URL}${name}`);
   return (
     <Card className="h-100">
@@ -36,12 +43,4 @@ const ProductCard = (props) => {
   );
 };
 
-ProductCard.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  description: PropTypes.string,
-  category: PropTypes.string,
-  pictures: PropTypes.string,
-};
 export default ProductCard;
