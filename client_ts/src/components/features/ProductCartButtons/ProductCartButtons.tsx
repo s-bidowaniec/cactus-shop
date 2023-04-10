@@ -7,11 +7,11 @@ import {
   removeItem,
 } from '../../../redux/order/orderRedux';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { RootState } from '../../../redux/store';
 
-const ProductCartButtons = (props) => {
+const ProductCartButtons = (props: { id: string }) => {
   const dispatch = useDispatch();
-  const orderProduct = useSelector((state) =>
+  const orderProduct = useSelector((state: RootState) =>
     getOrderedProductById(state, props.id),
   );
   return (
@@ -59,7 +59,5 @@ const ProductCartButtons = (props) => {
     </div>
   );
 };
-ProductCartButtons.propTypes = {
-  id: PropTypes.string,
-};
+
 export default ProductCartButtons;

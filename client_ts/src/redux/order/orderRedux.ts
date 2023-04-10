@@ -59,7 +59,7 @@ export const ordersSlice = createSlice({
       }
       return state;
     },
-    removeItem: (state, action: PayloadAction<OrderItemType>) => {
+    removeItem: (state, action: PayloadAction<{ id: string }>) => {
       return state.filter((item) => item.id !== action.payload.id);
     },
     clearOrder: (state) => {

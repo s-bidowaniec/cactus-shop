@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { addOrderRequest, getOrder } from '../../../redux/order/orderRedux';
 import { Link } from 'react-router-dom';
+import { RootState } from '../../../redux/store';
 
 const OrderForm = () => {
   const dispatch = useDispatch();
@@ -16,22 +17,20 @@ const OrderForm = () => {
     handleSubmit: validate,
     formState: { errors },
   } = useForm();
-  const order = useSelector((state) => getOrder(state));
+  const order = useSelector((state: RootState) => getOrder(state));
   const handleSubmit = () => {
     console.log(order);
-    dispatch(
-      addOrderRequest(
-        {
-          name,
-          surname,
-          address,
-          items: order.map((o) => {
-            return { id: o.id, quantity: o.count };
-          }),
-        },
-        setStatus,
-      ),
-    );
+    addOrderRequest(
+      {
+        name,
+        surname,
+        address,
+        items: order.map((o) => {
+          return { id: o.id, quantity: o.quantity };
+        }),
+      },
+      setStatus,
+    )(dispatch);
   };
   return (
     <div>
