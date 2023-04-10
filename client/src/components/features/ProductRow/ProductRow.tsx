@@ -10,20 +10,20 @@ import {
   removeItem,
 } from '../../../redux/order/orderRedux';
 import { Button } from 'react-bootstrap';
-import store, { RootState } from '../../../redux/store';
+import { RootState } from '../../../redux/store';
 //import order from '../../pages/Order/Order';
-import { ordersSlice } from '../../../redux/order/orderRedux';
+//import { ordersSlice } from '../../../redux/order/orderRedux';
 const ProductRow = (props: {
   id: string;
-  variant: string;
   quantity: number;
+  variant?: string;
 }) => {
   const dispatch = useDispatch();
   const activeProduct = useSelector((state: RootState) =>
     getProductById(state, props.id),
   );
   if (typeof activeProduct === 'undefined') {
-    return 'No product found';
+    return <span>No product found</span>;
   } else {
     const images = activeProduct.pictures
       .split(', ')
@@ -46,9 +46,7 @@ const ProductRow = (props: {
               <Button
                 onClick={() => {
                   console.log('click');
-                  store.dispatch(
-                    ordersSlice.actions.incrementItem({ id: activeProduct.id }),
-                  );
+                  dispatch(incrementItem({ id: activeProduct.id }));
                 }}
               >
                 +

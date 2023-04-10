@@ -2,9 +2,10 @@ import { useSelector } from 'react-redux';
 import { getAllProducts } from '../../../redux/products/productsRedux';
 import { Row, Col } from 'react-bootstrap';
 import ProductCard from '../../features/ProductCard/ProductCard';
+import { RootState } from '../../../redux/store';
 
 const Home = () => {
-  const products = useSelector((state) => getAllProducts(state));
+  const products = useSelector((state: RootState) => getAllProducts(state));
   return (
     <>
       <h1>Cactus Store</h1>

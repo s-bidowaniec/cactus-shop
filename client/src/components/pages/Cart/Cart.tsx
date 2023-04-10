@@ -4,9 +4,10 @@ import { Button, Container, Table } from 'react-bootstrap';
 import ProductRow from '../../features/ProductRow/ProductRow';
 import { Link } from 'react-router-dom';
 import { OrderTotalPrice } from '../../features/OrderTotalPrice/OrderTotalPrice';
+import { RootState } from '../../../redux/store';
 
 const Cart = () => {
-  const order = useSelector((state) => getOrder(state));
+  const order = useSelector((state: RootState) => getOrder(state));
   return (
     <Container>
       <Table className="bordered hover">

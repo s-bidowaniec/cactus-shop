@@ -18,7 +18,7 @@ export const getAllProducts = (state: RootState): ProductType[] =>
 
 export const getProductById = (
   state: RootState,
-  id: string,
+  id: string | undefined,
 ): ProductType | undefined =>
   state.products.find((product: ProductType) => product.id === id);
 
